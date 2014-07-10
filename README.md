@@ -4,6 +4,8 @@ CanvasMap
 CanvasMap is a simple HTML framework to experiment with projection equations. 
 CanvasMap uses JavaScript, HTML5 Canvas, and JQuery.
 
+Sample: http://cartography.oregonstate.edu/ScaleAdaptiveWebMapProjections.html#CanvasMapExample
+
 Programming by Bernhard Jenny and Bojan Savric, College of Earth, Ocean and 
 Atmospheric Sciences, Oregon State University, and Mostafa El-Fouly, TU Munich.
 
