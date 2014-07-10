@@ -1,0 +1,42 @@
+<project name="maintainablejs" default="minify">
+
+	<tstamp>
+		<format property="build.time"
+		pattern="MMMM d, yyyy hh:mm:ss"
+		locale="en,US"></format>
+	</tstamp>
+	<property name="src.dir" value="src"/>
+	<property name="build.dir" value="./"/>
+	<property name="closure" value="compiler.jar"/>
+	<property name="closure.options" value="--compilation_level SIMPLE_OPTIMIZATIONS"/>
+
+	<!-- Concatenation -->
+	<target name="concatenate">
+		<!--<loadfile property="license" srcfile="license.txt" />-->
+		<concat destfile="${build.dir}/CanvasMap.js" fixlastline="yes" eol="crlf">
+			<header trimleading="yes">
+				<!--/*!	${license} */-->
+				/* Build time: ${build.time} */
+			</header>
+			<!--<header>/* Build Time: ${build.time} */</header>-->
+			<fileset dir="${src.dir}" includes="**/*.js" />
+			<!--<fileset dir="${src.dir}" includes="**/*.js" excludes="first.js,second.js"/>-->
+		</concat>
+	</target>
+
+	<!-- Minification -->
+	<target name="minify" depends="concatenate">
+		<apply executable="java" failonerror="true">
+			<fileset dir="${build.dir}" includes="CanvasMap.js"/>
+			<mapper type="glob" from="*.js" to="${build.dir}/*-min.js"/>
+			<arg line="-jar"/>
+			<arg path="${closure}"/>
+			<arg line="${closure.options}"/>
+			<arg line="--js"/>
+			<srcfile/>
+			<arg line="--js_output_file"/>
+			<targetfile />
+		</apply>
+	</target>
+
+</project>

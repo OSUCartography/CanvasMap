@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Strebe Transformation</title>
+		<script src="../CanvasMap/jquery/jquery-1.11.1.min.js"></script>
+		<script src="../CanvasMap/jquery/jquery-ui-1.10.2.custom.min.js"></script>
+		<script src="../CanvasMap/jquery/jquery.ui.touch-punch.min.js"></script>
+		<script type="text/javascript" src="../CanvasMap/CanvasMap.js"></script>
+		<script type="text/javascript" src="UI.js"></script>
+		<link rel="stylesheet" href="../CanvasMap/jquery/css/smoothness/jquery-ui-1.10.2.custom.min.css">
+		<link rel="stylesheet" type="text/css" href="static.css">
+	</head>
+
+	<body>
+		<div id="container">
+			<div id="map" class="map">
+				<canvas id="mapCanvas" class="mapCanvas"></canvas>
+			</div>
+			<div id="meridianContainer">
+				First Forward Projection
+				<select id="forward1-menu" class="menu">
+					<option value="AlbersConic">Albers Conic</option>
+					<option value="ArdenClose">Arden-Close</option>
+					<option value="Bonne">Bonne</option>
+					<option value="Braun2">Braun II (Perspective)</option>
+					<option value="BraunStereographic">Braun Stereographic (&phi;&#8320; = 0&deg;)</option>
+					<option value="BSAM">BSAM (Stereographic &phi;&#8320; = 30&deg;)</option>
+					<option value="Canters1">Canters I</option>
+					<option value="Canters2">Canters II</option>
+					<option value="CentralCylindrical">Central Cylindrical</option>
+					<option value="EqualAreaCylindrical">Cylindrical Equal-area (Adaptive &phi;&#8320;)</option>
+					<option value="CylindricalStereographic">Cylindrical Stereographic (Adaptive &phi;&#8320;)</option>
+					<option value="Eckert4" selected>Eckert IV</option>
+					<option value="Equirectangular">Equirectangular (Adaptive &phi;&#8320;)</option>
+					<option value="GallIsographic">Gall Isographic (Equirectangular &phi;&#8320; = 45&deg;)</option>
+					<option value="GallPeters">Gall-Peters (Equal-area &phi;&#8320; = 45&deg;)</option>
+					<option value="GallStereographic">Gall Stereographic (&phi;&#8320; = 45&deg;)</option>
+					<option value="Hammer">Hammer</option>
+					<option value="Kamenetskiy1">Kamenetskiy I (Stereographic &phi;&#8320; = 55&deg;)</option>
+					<option value="Kavrayskiy1">Kavrayskiy I</option>
+					<option value="KharchenkoShabanova">Kharchenko-Shabanova</option>
+					<option value="LambertAzimuthalEqualAreaPolar">Lambert Azimuthal Equal-area Polar</option>
+					<option value="LambertEqualAreaCylindrical">Lambert Equal-area Cylindrical</option>
+					<option value="Mercator">Mercator</option>
+					<option value="Miller">Miller I</option>
+					<option value="Miller2">Miller II</option>
+					<option value="MillerGall">Miller-Gall (Stereographic &phi;&#8320; = 66&deg;10')</option>
+					<option value="MillerPerspective">Miller Perspective</option>
+					<option value="RMillerMinOverallScaleDistortion">Miller Minimum Overall Scale Distortion (Equirectangular &phi;&#8320; = 37&deg;30')</option>
+					<option value="RMillerMinContinentalScaleDistortion">Miller Minimum Continental Scale Distortion (Equirectangular &phi;&#8320; = 43&deg;30')</option>
+					<option value="Mollweide">Mollweide</option>
+					<option value="NaturalEarth">Natural Earth</option>
+					<option value="Pavlov">Pavlov</option>
+					<option value="PlateCarree">Plate Carr&eacute;e (Equirectangular &phi;&#8320; = 0&deg;)</option>
+					<option value="Robinson">Robinson</option>
+					<option value="Sinusoidal">Sinusoidal</option>
+					<option value="Strebe1995">Strebe 1995</option>
+					<option value="Tobler1">Tobler Alternate I</option>
+					<option value="Tobler2">Tobler Alternate II</option>
+					<option value="Urmayev2">Urmayev II</option>
+					<option value="Urmayev3">Urmayev III</option>
+					<option value="Wagner7">Wagner VII</option>
+				</select>
+				
+				<div>Inverse Projection</div>
+				<select id="inverse-menu" class="menu">
+					<option value="Eckert4">Eckert IV</option>
+					<option value="Equirectangular">Equirectangular (Adaptive &phi;&#8320;)</option>
+					<option value="Hammer">Hammer</option>
+					<option value="LambertEqualAreaCylindrical">Lambert Cylindrical</option>
+					<option value="Mollweide" selected>Mollweide</option>
+					<option value="Sinusoidal">Sinusoidal</option>				
+				</select>
+				
+				<div>Second Forward Projection</div>
+				<select id="forward2-menu" class="menu">
+					<option value="AlbersConic">Albers Conic</option>
+					<option value="ArdenClose">Arden-Close</option>
+					<option value="Bonne">Bonne</option>
+					<option value="Braun2">Braun II (Perspective)</option>
+					<option value="BraunStereographic">Braun Stereographic (&phi;&#8320; = 0&deg;)</option>
+					<option value="BSAM">BSAM (Stereographic &phi;&#8320; = 30&deg;)</option>
+					<option value="Canters1">Canters I</option>
+					<option value="Canters2">Canters II</option>
+					<option value="CentralCylindrical">Central Cylindrical</option>
+					<option value="EqualAreaCylindrical">Cylindrical Equal-area (Adaptive &phi;&#8320;)</option>
+					<option value="CylindricalStereographic">Cylindrical Stereographic (Adaptive &phi;&#8320;)</option>
+					<option value="Eckert4">Eckert IV</option>
+					<option value="Equirectangular">Equirectangular (Adaptive &phi;&#8320;)</option>
+					<option value="GallIsographic">Gall Isographic (Equirectangular &phi;&#8320; = 45&deg;)</option>
+					<option value="GallPeters">Gall-Peters (Equal-area &phi;&#8320; = 45&deg;)</option>
+					<option value="GallStereographic">Gall Stereographic (&phi;&#8320; = 45&deg;)</option>
+					<option value="Hammer" selected>Hammer</option>
+					<option value="Kamenetskiy1">Kamenetskiy I (Stereographic &phi;&#8320; = 55&deg;)</option>
+					<option value="Kavrayskiy1">Kavrayskiy I</option>
+					<option value="KharchenkoShabanova">Kharchenko-Shabanova</option>
+					<option value="LambertAzimuthalEqualAreaPolar">Lambert Azimuthal Equal-area Polar</option>
+					<option value="LambertEqualAreaCylindrical">Lambert Equal-area Cylindrical</option>
+					<option value="Mercator">Mercator</option>
+					<option value="Miller">Miller I</option>
+					<option value="Miller2">Miller II</option>
+					<option value="MillerGall">Miller-Gall (Stereographic &phi;&#8320; = 66&deg;10')</option>
+					<option value="MillerPerspective">Miller Perspective</option>
+					<option value="RMillerMinOverallScaleDistortion">Miller Minimum Overall Scale Distortion (Equirectangular &phi;&#8320; = 37&deg;30')</option>
+					<option value="RMillerMinContinentalScaleDistortion">Miller Minimum Continental Scale Distortion (Equirectangular &phi;&#8320; = 43&deg;30')</option>
+					<option value="Mollweide">Mollweide</option>
+					<option value="NaturalEarth">Natural Earth</option>
+					<option value="Pavlov">Pavlov</option>
+					<option value="PlateCarree">Plate Carr&eacute;e (Equirectangular &phi;&#8320; = 0&deg;)</option>
+					<option value="Robinson">Robinson</option>
+					<option value="Sinusoidal">Sinusoidal</option>
+					<option value="Strebe1995">Strebe 1995</option>
+					<option value="Tobler1">Tobler Alternate I</option>
+					<option value="Tobler2">Tobler Alternate II</option>
+					<option value="Urmayev2">Urmayev II</option>
+					<option value="Urmayev3">Urmayev III</option>
+					<option value="Wagner7">Wagner VII</option>
+				</select>
+
+				<div id="slider"></div>
+				<div id="sliderText"></div>
+			</div>
+		</div>
+	</body>
+</html>

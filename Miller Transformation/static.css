@@ -1,0 +1,49 @@
+body {
+	background-color: #eee;
+	font: 12px sans-serif;
+}
+
+.map {
+	height:500px;
+	width:100%;
+	padding:0px;
+	border:0px;
+	background-color: #fff;
+	position:relative;
+}
+
+.mapCanvas {
+	width: 100%;
+	height: 100%;
+	position:absolute;
+}
+
+#meridianContainer {
+	position: relative;
+	margin-left:auto;
+	margin-right:auto;
+	width:380px;
+}
+
+#meridianSlider{
+	position: relative;
+	width:300px;
+	float: left;
+}
+
+#meridianText{
+	position: relative;
+	width: 70px;
+	margin-left: 5px;
+	float: left;
+}
+
+#mSlider {
+	float: left;
+	width: 400px;
+}
+
+#nSlider {
+	float: left;
+	width: 400px;
+}

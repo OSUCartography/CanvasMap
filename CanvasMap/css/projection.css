@@ -1,0 +1,53 @@
+body {
+	background-color: #eee;
+	font: 12px sans-serif;
+}
+
+h1 {
+	font: 18px sans-serif;
+}
+
+#container {
+}
+
+.map {
+	height:500px;
+	padding:0px;
+	border:0px;
+	background-color: #fff;
+	margin-right: 310px;
+	position:relative;
+}
+
+.mapCanvas {
+	width: 100%;
+	height: 100%;
+	position:absolute;
+}
+
+.mapControls {
+	width: 300px;
+	float: right;
+	margin-left: 10px;
+}
+
+.sliderContainer {
+	padding-top: 5px;
+	padding-bottom: 30px;
+	width: 300px;
+}
+
+.slider {
+	float: left;
+	width: 200px;
+}
+
+.sliderValueText {
+	float: right;
+	width: 80px;
+}
+
+.menu {
+	width: 300px;
+	margin-bottom: 10px;
+}
