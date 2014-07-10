@@ -11,16 +11,12 @@ Contact: Bernhard Jenny <jennyb@geo.oregonstate.edu>
 
 License: GNU General Public License Version 2: http://www.gnu.org/licenses/gpl-2.0.html
 
-File structure
-==============
-
+##File structure
 CanvasMap contains the core JavaScript files. Code related to the map and projections is
 in src/. CanvasMap.js is created by the build.xml ant script. Include this file in the
 HTML file.
 
-Demos
-=====
-
+##Demos
 All code specific to an application is included in the UI.js files. These files construct
 the HTML GUI, provide event handlers and create the map with a projection.
 
@@ -33,9 +29,7 @@ MillerTransformation illustrates a transformation of the Mercator projection sug
 by Miller in 1942.
 StrebeTransformation illustrates a transformation method invented by D. Strebe.
 
-Programming Model
-=================
-
+##Programming Model
 UI.js:
 DOM event handlers and construction of the model consisting of a map, one or more layers
 and a projection.
@@ -49,9 +43,7 @@ Contains an array of layers, a projection, and scale factor applied before drawi
 After the layer, canvas, projection and scale are created, invoke map.load to load the 
 layer geometry.
 
-Extending CanvasMap with Custom Projections
-===========================================
-
+##Extending CanvasMap with Custom Projections
 To extend CanvasMap with an additional projection, duplicate an existing 
 projection file in the projections folder and change the function name and the included
 toString() and forward() functions.
