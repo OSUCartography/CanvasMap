@@ -1,0 +1,26 @@
+#StParallel {
+	margin-bottom: 30px;
+}
+
+#selectable {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+#feedback {
+	font-size: 1.4em;
+}
+#selectable .ui-selecting {
+	background: #BBBBBB;
+}
+#selectable .ui-selected {
+	background: #BBBBBB;
+	color: white;
+}
+#selectable li {
+	margin-top: 3px;
+	margin-bottom: 3px;
+	padding: 0.4em;
+	width: 195px;
+	height: 18px;
+}
