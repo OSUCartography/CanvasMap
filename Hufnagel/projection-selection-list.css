@@ -1,3 +1,10 @@
+#foldingWarning {
+	color:red;
+	margin-top: 12px;
+	margin: 6px;
+	display: none;
+}
+
 #StParallel {
 	margin-bottom: 30px;
 }

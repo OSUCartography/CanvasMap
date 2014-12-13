@@ -16,6 +16,11 @@ function updateProjection() {
 	projection.setPsiMax($("#sliderPsi").slider("value") / 180 * Math.PI);
 	projection.setAspectRatio($("#sliderAspect").slider("value") / 100);
 	map.setProjection(projection);
+	if (projection.isGraticuleFolding()) {
+		$("#foldingWarning").show();
+	} else {
+		$("#foldingWarning").hide();
+	}
 }
 
 function updateSliderTexts() {
