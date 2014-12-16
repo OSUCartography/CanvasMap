@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Aspect-Adaptive Cylindrical</title>
+		<script src="../CanvasMap/jquery/jquery-1.11.1.min.js"></script>
+		<script src="../CanvasMap/jquery/jquery-ui-1.10.2.custom.min.js"></script>
+		<script src="../CanvasMap/jquery/jquery.ui.touch-punch.min.js"></script>
+		
+		<script type="text/javascript" src="../CanvasMap/CanvasMap.js"></script>
+		<script type="text/javascript" src="UI.js"></script>
+
+		<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+
+		<link rel="stylesheet" href="../CanvasMap/jquery/css/smoothness/jquery-ui-1.10.2.custom.min.css">
+		<link rel="stylesheet" type="text/css" href="projection-selection-list.css">
+		<link rel="stylesheet" type="text/css" href="../CanvasMap/css/projection.css">
+
+	</head>
+
+	<body>
+
+		<h1 id="title">A Compromise Aspect-Adaptive Cylindrical Projection</h1>
+		<p>
+			A new compromise cylindrical map projection family that adjusts the distribution of parallels to the aspect ratio of a canvas. 
+		</p>
+		<p>
+			Developed by Bernhard Jenny (Oregon State University), Bojan Šavrič (Oregon State University), and Tom Patterson (US National Park Service).
+		</p>
+		<p>
+			Jenny, B., Šavrič, B. and Patterson, T. (—). A compromise aspect-adaptive cylindrical projection for world maps. International Journal of Geographical Information Science (in press).<br><br>
+		</p>
+			
+		<div id="container">
+
+			<div class="mapControls">
+				<div>
+					Length Ratio between Equator and Central Meridian
+				</div>
+				
+				<div class="sliderContainer">
+					<div id="sliderAspect" class="slider"></div>
+					<div id="sliderAspectText" class="sliderValueText"></div>
+				</div>
+
+				<ol id="selectable">
+					<li id="projectionPlateCarree" class="ui-widget-content">
+						Plate Carrée 
+					</li>
+					<li id="projectionCompactMiller" class="ui-widget-content">
+						Compact Miller
+					</li>
+				</ol>
+				
+			</div>
+			
+			<div id="map" class="map">
+				<canvas id="mapCanvas" class="mapCanvas"></canvas>
+			</div>
+		</div>
+
+	</body>
+</html>
