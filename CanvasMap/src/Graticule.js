@@ -1,84 +1,86 @@
 /*globals LineDrawer, applyStyle*/
 
-function Graticule(style, resolutionDeg) {"use strict";
+/**
+ * Map graticule (lines of constant longitude and latitude)
+ * @param {Object} style Style for drawing the graticule
+ * @param {Object} lineDistanceDeg Distance in degrees between neighboring lines of constant longitude or latitude.
+ * @param {Object} maxPointDistance Maximum distance in degrees for drawing lines. Optional. Specify low value (e.g., 1 deg) if graticule is unusually curvy.
+ */
+function Graticule(style, lineDistanceDeg, maxPointDistance) {
+	"use strict";
 
-    function drawMeridian(projection, scale, canvas, lon) {
-        var i, ctx, nPts, dLat, lat, lineDrawer, xy = [];
-        nPts = 11;
-        dLat = Math.PI / (nPts - 1);
+	if (maxPointDistance === undefined) {
+		maxPointDistance = 5;
+	}
+	var nVerticalPoints = 180 / Math.min(lineDistanceDeg, maxPointDistance) + 1,
+	    nHorizontalPoints = 360 / Math.min(lineDistanceDeg, maxPointDistance) + 1;
 
-        // draw southern and northern hemisphere separately
-        // southern hemisphere
-        ctx = canvas.getContext('2d');
-        lineDrawer = new LineDrawer(0, scale, projection, ctx);
-        for ( i = 0; i < nPts / 2; i += 1) {
-            lat = -Math.PI / 2 + i * dLat;
-            lineDrawer.projectDraw(lon, lat);
-        }
-        lineDrawer.stroke();
+	function drawMeridian(projection, scale, lineDrawer, lon) {
+		var i,
+		    lat,
+		    dLat = Math.PI / (nVerticalPoints - 1);
+		for ( i = 0; i < nVerticalPoints; i += 1) {
+			lat = -Math.PI / 2 + i * dLat;
+			lineDrawer.projectDraw(lon, lat);
+		}
+		lineDrawer.stroke();
+	}
 
-        // northern hemisphere
-        for ( i = 0; i < nPts / 2; i += 1) {
-            lat = i * dLat;
-            lineDrawer.projectDraw(lon, lat);
-        }
-        lineDrawer.stroke();
-    }
-
-    function drawParallel(projection, scale, canvas, lat) {
-        var i, ctx, nPts, dLon, lon, lineDrawer, xy = [];
-        nPts = 20;
-        dLon = 2 * Math.PI / (nPts - 1);
-        ctx = canvas.getContext('2d');
-        lineDrawer = new LineDrawer(0, scale, projection, ctx);
-        for ( i = 0; i < nPts; i += 1) {
-            lon = -Math.PI + i * dLon;
-            lineDrawer.projectDraw(lon, lat);
-        }
-        lineDrawer.stroke();
-    }
+	function drawParallel(projection, scale, lineDrawer, lat) {
+		var i,
+		    lon,
+		    dLon = 2 * Math.PI / (nHorizontalPoints - 1);
+		for ( i = 0; i < nHorizontalPoints; i += 1) {
+			lon = -Math.PI + i * dLon;
+			lineDrawer.projectDraw(lon, lat);
+		}
+		lineDrawer.stroke();
+	}
 
 
-    this.render = function(projection, lon0, scale, canvas) {
-        var ctx, i, lon, lat;
+	this.render = function(projection, lon0, scale, canvas) {
+		var i,
+		    lon,
+		    lat,
+		    ctx = canvas.getContext('2d'),
+		    lineDrawer = new LineDrawer(0, scale, projection, ctx);
 
-        ctx = canvas.getContext('2d');
-        ctx.save();
-        ctx.translate(canvas.width / 2, canvas.height / 2);
-        applyStyle(style, ctx);
+		ctx.save();
+		ctx.translate(canvas.width / 2, canvas.height / 2);
+		applyStyle(style, ctx);
 
-        // meridians
-        for ( i = 0; i < 360 / resolutionDeg; i += 1) {
-            lon = -Math.PI + i * resolutionDeg / 180 * Math.PI - lon0;
-            while (lon < -Math.PI) {
-                lon += Math.PI * 2;
-            }
-            while (lon > Math.PI) {
-                lon -= Math.PI * 2;
-            }
-            drawMeridian(projection, scale, canvas, lon);
-        }
+		// meridians
+		for ( i = 0; i < 360 / lineDistanceDeg; i += 1) {
+			lon = -Math.PI + i * lineDistanceDeg / 180 * Math.PI - lon0;
+			while (lon < -Math.PI) {
+				lon += Math.PI * 2;
+			}
+			while (lon > Math.PI) {
+				lon -= Math.PI * 2;
+			}
+			drawMeridian(projection, scale, lineDrawer, lon);
+		}
 
-        // parallels
-        for ( i = 1; i < 180 / resolutionDeg; i += 1) {
-            lat = -Math.PI / 2 + i * resolutionDeg / 180 * Math.PI;
-            drawParallel(projection, scale, canvas, lat);
-        }
+		// parallels
+		for ( i = 1; i < 180 / lineDistanceDeg; i += 1) {
+			lat = -Math.PI / 2 + i * lineDistanceDeg / 180 * Math.PI;
+			drawParallel(projection, scale, lineDrawer, lat);
+		}
 
-        // vertical graticule border
-        if ( typeof (projection.isPoleInsideGraticule) !== 'function' || projection.isPoleInsideGraticule() === false) {
-            drawMeridian(projection, scale, canvas, -Math.PI);
-            drawMeridian(projection, scale, canvas, Math.PI);
-        }
+		// vertical graticule border
+		if ( typeof (projection.isPoleInsideGraticule) !== 'function' || projection.isPoleInsideGraticule() === false) {
+			drawMeridian(projection, scale, lineDrawer, -Math.PI);
+			drawMeridian(projection, scale, lineDrawer, Math.PI);
+		}
 
-        // horizontal graticule border
-        drawParallel(projection, scale, canvas, -Math.PI / 2);
-        drawParallel(projection, scale, canvas, Math.PI / 2);
+		// horizontal graticule border
+		drawParallel(projection, scale, lineDrawer, -Math.PI / 2);
+		drawParallel(projection, scale, lineDrawer, Math.PI / 2);
 
-        ctx.restore();
-    };
+		ctx.restore();
+	};
 
-    this.load = function(projection, scale, map) {
-        // dummy
-    };
+	this.load = function(projection, scale, map) {
+		// dummy
+	};
 }

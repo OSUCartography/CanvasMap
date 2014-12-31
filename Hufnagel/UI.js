@@ -317,7 +317,7 @@ $(window).load(function() {
 	}
 
 	//create the map
-	graticule = new Graticule(new Style("#77b", "1"), 15);
+	graticule = new Graticule(new Style("#77b", "1"), 15, 1);
 	layers = [];
 	layers.push(new Layer("../data/ne_110m_coastline", new Style("#888", "1")));
 	layers.push(graticule);
