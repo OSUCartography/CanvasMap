@@ -137,9 +137,6 @@ function Hufnagel() {
 		width = xy[0];
 		this.forward(0, Math.PI / 2, xy);
 		c = Math.sqrt(aspectRatio / (width / xy[1]));
-
-		// lookup tables for correct aspect ratio
-		initLUTs();
 	};
 
 	this.init();

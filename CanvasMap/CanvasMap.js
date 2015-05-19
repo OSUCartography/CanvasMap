@@ -1,6 +1,6 @@
 
 
-/* Build time: December 30, 2014 11:43:45 */
+/* Build time: May 18, 2015 06:22:04 */
 
 /*globals LineDrawer, applyStyle*/
 
@@ -2499,9 +2499,6 @@ function Hufnagel() {
 		width = xy[0];
 		this.forward(0, Math.PI / 2, xy);
 		c = Math.sqrt(aspectRatio / (width / xy[1]));
-
-		// lookup tables for correct aspect ratio
-		initLUTs();
 	};
 
 	this.init();
