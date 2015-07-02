@@ -254,7 +254,7 @@ function initPsiSlider() {
 	$("#sliderPsi").slider({
 		orientation : "horizontal",
 		range : "min",
-		min : 1,
+		min : 0,
 		max : 90,
 		value : 90,
 		step : 1,
