@@ -58,7 +58,7 @@ function Hufnagel() {
 		    sin2Psi,
 		    sin4Psi,
 		    sin6Psi,
-		    as,
+		    sinPhi,
 		    phi,
 		    r,
 		    y;
@@ -79,11 +79,11 @@ function Hufnagel() {
 				sin2Psi = Math.sin(2 * psi);
 				sin4Psi = Math.sin(4 * psi);
 				sin6Psi = Math.sin(6 * psi);
-				as = 0.25 / Math.PI * k * k * (2 * psi + (1 + a - 0.5 * b) * sin2Psi + 0.5 * (a + b) * sin4Psi + 0.5 * b * sin6Psi);
-				if (Math.abs(as) > 1) {
-					phi = as > 0 ? Math.PI / 2 : -Math.PI / 2;
+				sinPhi = 0.25 / Math.PI * k * k * (2 * psi + (1 + a - 0.5 * b) * sin2Psi + 0.5 * (a + b) * sin4Psi + 0.5 * b * sin6Psi);
+				if (Math.abs(sinPhi) > 1) {
+					phi = sinPhi > 0 ? Math.PI / 2 : -Math.PI / 2;
 				} else {
-					phi = Math.asin(as);
+					phi = Math.asin(sinPhi);
 				}
 			}
 			/*
