@@ -126,24 +126,22 @@ function Hufnagel() {
 		}
 		psi0 = approximatePsi(lat);
 
-		if (Math.abs(psi0) < Math.PI / 2) {
-			while (true) {
-				psi0_x_2 = psi0 * 2;
-				deltaPsiNominator = (ksq / 4) * (psi0_x_2 + (1 + a - b / 2) * Math.sin(psi0_x_2) + ((a + b) / 2) * Math.sin(2 * psi0_x_2) + (b / 2) * Math.sin(3 * psi0_x_2)) - PI_x_sinLat;
-				if (Math.abs(deltaPsiNominator) < EPS) {
-					break;
-				}
-				deltaPsiDenominator = (ksq / 2) * (1 + (1 + a - (b / 2)) * Math.cos(psi0_x_2) + (a + b) * Math.cos(2 * psi0_x_2) + (3 * b / 2) * Math.cos(3 * psi0_x_2));
-				deltaPsi = deltaPsiNominator / deltaPsiDenominator;
-
-				i = i + 1;
-				if (!isFinite(deltaPsi) || i > MAX_ITER) {
-					xy[0] = NaN;
-					xy[1] = NaN;
-					return;
-				}
-				psi0 = psi0 - deltaPsi;
+		while (true) {
+			psi0_x_2 = psi0 * 2;
+			deltaPsiNominator = (ksq / 4) * (psi0_x_2 + (1 + a - b / 2) * Math.sin(psi0_x_2) + ((a + b) / 2) * Math.sin(2 * psi0_x_2) + (b / 2) * Math.sin(3 * psi0_x_2)) - PI_x_sinLat;
+			if (Math.abs(deltaPsiNominator) < EPS) {
+				break;
 			}
+			deltaPsiDenominator = (ksq / 2) * (1 + (1 + a - (b / 2)) * Math.cos(psi0_x_2) + (a + b) * Math.cos(2 * psi0_x_2) + (3 * b / 2) * Math.cos(3 * psi0_x_2));
+			deltaPsi = deltaPsiNominator / deltaPsiDenominator;
+
+			i = i + 1;
+			if (!isFinite(deltaPsi) || i > MAX_ITER) {
+				xy[0] = NaN;
+				xy[1] = NaN;
+				return;
+			}
+			psi0 = psi0 - deltaPsi;
 		}
 
 		// calculate x and y
