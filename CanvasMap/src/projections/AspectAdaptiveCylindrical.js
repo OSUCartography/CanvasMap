@@ -69,11 +69,11 @@ function AspectAdaptiveCylindrical() {"use strict";
 		xy[1] = lat * (k11 + lat2 * (k12 + lat2 * k13));
 
 		if ((aspectRatio > EXTRA_ASPECT_LIMIT) && (lat > EXTRA_LAT_LIMIT)) {
-			lat_diff = lat - EXTRA_ASPECT_LIMIT;
+			lat_diff = lat - EXTRA_LAT_LIMIT;
 			xy[1] += lat_diff * (k21 + lat_diff * lat_diff * k22);
 		}
 		if ((aspectRatio > EXTRA_ASPECT_LIMIT) && (lat < -EXTRA_LAT_LIMIT)) {
-			lat_diff = lat + EXTRA_ASPECT_LIMIT;
+			lat_diff = lat + EXTRA_LAT_LIMIT;
 			xy[1] += lat_diff * (k21 + lat_diff * lat_diff * k22);
 		}
 	};
