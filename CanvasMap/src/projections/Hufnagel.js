@@ -1,3 +1,15 @@
+/**
+ * The Hufnagel projection family was introduced by Herbert Hufnagel in
+ * "Hufnagel, H. 1989. Ein System unecht-zylindrischer Kartennetze für
+ * Erdkarten. Kartographische Nachrichten, 39(3), 89–96." All projections are
+ * equal-area. Implementation by Bernhard Jenny, Oregon State University, Bojan
+ * Savric, Oregon State University, with substantial contributions by Daniel
+ * "daan" Strebe, Mapthematics. November 2014 to October 2015.
+ *
+ * @author Bojan Savric
+ * @author Bernhard Jenny
+ */
+
 function Hufnagel() {
 	"use strict";
 
@@ -8,14 +20,13 @@ function Hufnagel() {
 	// ratio between equator and central meridian lengths
 	    aspectRatio = 2,
 	// tolerance for iterative computations
-	    EPS = 1.0e-6,
+	    EPS = 1.0e-12,
 	// maximum number of computations
 	    MAX_ITER = 100,
 	// size of lookup table
 	    LUT_SIZE = 101,
-	// lookup tables
+	// lookup tables, yLUT, would be needed for inverse projection
 	    latLUT,
-	// yLUT, would be needed for inverse projection
 	    psiLUT,
 	// parameters pre-computed in init() from a, b, psiMax and aspectRatio
 	    ksq,
@@ -24,7 +35,7 @@ function Hufnagel() {
 	// true if the graticule is folding over itself. Only an approximation, not all cases with folding graticules are captured.
 	    graticuleFolding = false;
 
-	function approximatePsi(lat) {
+	function approximatePsiFromLookupTable(lat) {
 		var w,
 		    psi,
 		    lat_abs = Math.abs(lat),
@@ -52,7 +63,7 @@ function Hufnagel() {
 		return lat < 0 ? -psi : psi;
 	}
 
-	function initLUTs() {
+	function initializeLookUpTables() {
 		var i,
 		    psi,
 		    sin2Psi,
@@ -63,7 +74,6 @@ function Hufnagel() {
 		    r,
 		    y;
 		latLUT = [];
-		//yLUT = [];
 		psiLUT = [];
 		graticuleFolding = false;
 		for ( i = 0; i < LUT_SIZE; i = i + 1) {
@@ -86,54 +96,41 @@ function Hufnagel() {
 					phi = Math.asin(sinPhi);
 				}
 			}
-			/*
-			// compute y coordinate
-			r = Math.sqrt(1 + a * Math.cos(2 * psi) + b * Math.cos(4 * psi));
-			y = r * Math.sin(psi);
-
-			// test for folding graticule
-			if (i > 0) {
-			if (y < yLUT[i - 1] || phi < latLUT[i - 1]) {
-			graticuleFolding = true;
-			y = yLUT[i - 1];
-			phi = latLUT[i - 1];
-			}
-			}
-			*/
+			
 			// store values in lookup tables
 			latLUT.push(phi);
-			//yLUT.push(y);
 			psiLUT.push(psi);
 		}
 	}
 
-
 	this.forward = function(lon, lat, xy) {
 		var r,
 		    deltaPsi,
-		    deltaPsiNominator,
+		    deltaPsiNumerator,
 		    deltaPsiDenominator,
-		    psi0 = 0,
+		    psi = 0,
 		    i = 0,
 		    PI_x_sinLat = Math.PI * Math.sin(lat),
-		    psi0_x_2;
+		    psi_x_2;
 
 		if (psiMax === 0) {
-			// standard parallel of equal-area cylindrical projection
+			// cylindrical equal-area projection
 			xy[0] = lon * k;
 			xy[1] = Math.sin(lat) / k;
 			return;
 		}
-		psi0 = approximatePsi(lat);
+		// approximate psi from lookup table
+		psi = approximatePsiFromLookupTable(lat);
 
+		// iteratively improve psi
 		while (true) {
-			psi0_x_2 = psi0 * 2;
-			deltaPsiNominator = (ksq / 4) * (psi0_x_2 + (1 + a - b / 2) * Math.sin(psi0_x_2) + ((a + b) / 2) * Math.sin(2 * psi0_x_2) + (b / 2) * Math.sin(3 * psi0_x_2)) - PI_x_sinLat;
-			if (Math.abs(deltaPsiNominator) < EPS) {
+			psi_x_2 = psi * 2;
+			deltaPsiNumerator = (ksq / 4) * (psi_x_2 + (1 + a - b / 2) * Math.sin(psi_x_2) + ((a + b) / 2) * Math.sin(2 * psi_x_2) + (b / 2) * Math.sin(3 * psi_x_2)) - PI_x_sinLat;
+			if (Math.abs(deltaPsiNumerator) < EPS) {
 				break;
 			}
-			deltaPsiDenominator = (ksq / 2) * (1 + (1 + a - (b / 2)) * Math.cos(psi0_x_2) + (a + b) * Math.cos(2 * psi0_x_2) + (3 * b / 2) * Math.cos(3 * psi0_x_2));
-			deltaPsi = deltaPsiNominator / deltaPsiDenominator;
+			deltaPsiDenominator = (ksq / 2) * (1 + (1 + a - (b / 2)) * Math.cos(psi_x_2) + (a + b) * Math.cos(2 * psi_x_2) + (3 * b / 2) * Math.cos(3 * psi_x_2));
+			deltaPsi = deltaPsiNumerator / deltaPsiDenominator;
 
 			i = i + 1;
 			if (!isFinite(deltaPsi) || i > MAX_ITER) {
@@ -141,13 +138,13 @@ function Hufnagel() {
 				xy[1] = NaN;
 				return;
 			}
-			psi0 = psi0 - deltaPsi;
+			psi = psi - deltaPsi;
 		}
 
 		// calculate x and y
-		r = Math.sqrt(1 + a * Math.cos(2 * psi0) + b * Math.cos(4 * psi0));
-		xy[0] = k * r * c * lon / Math.PI * Math.cos(psi0);
-		xy[1] = k * r / c * Math.sin(psi0);
+		r = Math.sqrt(1 + a * Math.cos(2 * psi) + b * Math.cos(4 * psi));
+		xy[0] = k * r * c * lon / Math.PI * Math.cos(psi);
+		xy[1] = k * r / c * Math.sin(psi);
 	};
 
 	this.init = function() {
@@ -158,19 +155,9 @@ function Hufnagel() {
 			    width;
 			ksq = (4 * Math.PI) / (2 * psiMax + (1 + a - b / 2) * Math.sin(2 * psiMax) + ((a + b) / 2) * Math.sin(4 * psiMax) + (b / 2) * Math.sin(6 * psiMax));
 			k = Math.sqrt(ksq);
-			c = 1;
-
-			// lookup tables for native aspect ratio
-			initLUTs();
-
-			// compute correction factor c to obtain desired ratio between equator and central meridian
-			this.forward(Math.PI, 0, xy);
-			width = xy[0];
-			this.forward(0, Math.PI / 2, xy);
-			c = Math.sqrt(aspectRatio / (width / xy[1]));
-
-			// lookup tables for correct aspect ratio
-			initLUTs();
+			c = Math.sqrt(aspectRatio * Math.sin(psiMax)
+                    * Math.sqrt((1 + a * Math.cos(2 * psiMax) + b * Math.cos(4 * psiMax)) / (1 + a + b)));
+			initializeLookUpTables();
 		}
 	};
 
