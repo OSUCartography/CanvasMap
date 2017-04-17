@@ -105,6 +105,8 @@ function getProjection(projectionName) {"use strict";
 			return new Urmayev2();
 		case "Urmayev3":
 			return new Urmayev3();
+		case "Wagner1":
+			return new Wagner1();
 		case "Wagner7":
 			return new Wagner7();
 		case "WagnerPseudocylindrical":
