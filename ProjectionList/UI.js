@@ -85,6 +85,8 @@ function getProjection(projectionName) {"use strict";
 			proj = new Equirectangular();
 			proj.setStandardParallel(0);
 			return proj;
+		case "PutninsP4P":
+			return new PutninsP4P();
 		case "RMillerMinOverallScaleDistortion":
 			proj = new Equirectangular();
 			proj.setStandardParallel(37.5 / 180 * Math.PI);
