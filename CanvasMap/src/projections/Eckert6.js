@@ -20,6 +20,12 @@ function Eckert6() {"use strict";
         xy[1] = C_y * lat;
     };
     
+    this.inverse = function (x, y, lonlat) {
+		y /= C_y;
+        lonlat[1] = Math.asin((y + Math.sin(y)) / n);
+        lonlat[0] = x / (C_x * (1 + Math.cos(y)));
+    };  
+    
 	this.toString = function() {
 		return 'Eckert VI';
 	};
