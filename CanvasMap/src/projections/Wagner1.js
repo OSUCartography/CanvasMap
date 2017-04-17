@@ -14,4 +14,10 @@ function Wagner1() {"use strict";
         xy[0] = C_x * lon * Math.cos(lat);
         xy[1] = C_y * lat;
 	};
+	
+	this.inverse = function (x, y, lonlat) {
+		y /= C_y;
+        lonlat[1] = Math.asin(Math.sin(y) / n);
+        lonlat[0] = x / (C_x * Math.cos(y));
+    };
 }
