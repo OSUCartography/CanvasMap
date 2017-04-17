@@ -1,4 +1,4 @@
-function Wagner1(w) {"use strict";
+function Wagner1() {"use strict";
 	
 	var C_x = 0.8773826753, 
 		Cy = 1.139753528477,
