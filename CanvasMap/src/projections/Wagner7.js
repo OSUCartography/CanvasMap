@@ -38,5 +38,6 @@ function Wagner7(w) {"use strict";
 		CA = k / k2;
 		CB = 1 / (k * k2);
 	};
+	
 	this.setW(arguments.length === 0 ? 1 : w);
 }

@@ -30,6 +30,8 @@ function getProjection(projectionName) {"use strict";
 			return new CylindricalStereographic();
 		case "Eckert4":
 			return new Eckert4();
+		case "Eckert6":
+			return new Eckert6();
 		case "EqualAreaCylindrical":
 			return new EqualAreaCylindrical();
 		case "Equirectangular":
