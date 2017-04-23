@@ -1,11 +1,25 @@
 function SineSeries(p, q) {
     "use strict";
 
-    var k = q / p;
+    if (arguments.length < 2) {
+        p = 1.33;
+        q = 1.135;
+    }
 
+    var k = q / p;
 
     this.toString = function () {
         return 'Sine Series';
+    };
+
+    this.setP = function (newP) {
+        p = parseFloat(newP);
+        k = q / p;
+    };
+
+    this.setQ = function (newQ) {
+        q = parseFloat(newQ);
+        k = q / p;
     };
 
     this.forward = function (lon, lat, xy) {
@@ -13,7 +27,6 @@ function SineSeries(p, q) {
         lat /= q;
         xy[0] = x / Math.cos(lat);
         xy[1] = p * Math.sin(lat);
-
     };
 
     this.inverse = function (x, y, lonlat) {
