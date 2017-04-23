@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Sine Series</title>
+        <script src="../CanvasMap/jquery/jquery-1.11.1.min.js"></script>
+        <script src="../CanvasMap/jquery/jquery-ui-1.10.2.custom.min.js"></script>
+        <script src="../CanvasMap/jquery/jquery.ui.touch-punch.min.js"></script>
+        <script type="text/javascript" src="../CanvasMap/CanvasMap.js"></script>
+        <script type="text/javascript" src="UI.js"></script>
+        <link rel="stylesheet" href="../CanvasMap/jquery/css/smoothness/jquery-ui-1.10.2.custom.min.css">
+        <link rel="stylesheet" type="text/css" href="static.css">
+    </head>
+
+    <body>
+        <div id="container">
+            <div id="header">
+                <h1>Sine Series</h1>
+            </div>
+
+            <div id="map" class="map">
+                <canvas id="mapCanvas" class="mapCanvas"></canvas>
+            </div>
+
+            <div id="guiControlsContainer" class="guiGroup">
+                <div class="guiGroup">
+                    <div class="guiTitle">p</div>
+                    <div id="pSlider" class="slider"></div>
+                    <div id="pSliderText" class="sliderText"></div>
+                    <br>
+                </div>
+
+                <div class="guiGroup">
+                    <div class="guiTitle">q</div>
+                    <div id="qSlider" class="slider"></div>
+                    <div id="qSliderText" class="sliderText"></div>
+                </div>
+                
+                <div id="buttonGroup" class="guiGroup">
+                    <button name="button" onclick="setPQ(2, 2);">Quartic Authalic</button>
+                    <button name="button" onclick="setPQ(1.48875, 1.36509);">McBryde-Thomas 1</button>
+                    <button name="button" onclick="setPQ(1.504875, 1.504875 * 0.9);">Kavraisky V</button>
+                </div>
+            </div>
+                        
+        </div>
+    </body>
+</html>

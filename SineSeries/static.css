@@ -1,0 +1,68 @@
+.map {
+    height: 900px;
+    width: 100%;
+    padding: 0px;
+    border: 0px;
+    margin: 0px;
+    background-color: #fff;
+    position: relative;
+}
+
+body {
+    background-color: #eee;
+    font-family: "Lucida Grande", "Open Sans", sans-serif;
+    font-size: 12px;
+    padding: 0px;
+    border: 0px;
+    margin: 0px;
+}
+
+h1 {
+    font-family: "Lucida Grande", "Open Sans", sans-serif;
+    font-size: 14px;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.guiTitle{
+    font-family: "Lucida Grande", "Open Sans", sans-serif;
+    font-size: 12px;
+    font-weight: bolder;
+    margin-bottom: 5px;
+}
+
+.guiGroup {
+    padding-bottom: 15px;
+}
+
+.mapCanvas {
+    width: 100%;
+    height: 100%;
+    position:absolute;
+}
+
+#guiControlsContainer {
+    position: relative;
+    margin-left:auto;
+    margin-right:auto;
+    width:380px;
+    margin-top: 20px;
+}
+
+.slider{
+    position: relative;
+    width:300px;
+    float: left;
+}
+
+
+.sliderText{
+    position: relative;
+    width: 70px;
+    margin-left: 5px;
+    float: left;
+}
+
+#buttonGroup {
+    margin-top: 15px;
+}
