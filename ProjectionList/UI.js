@@ -62,6 +62,8 @@ function getProjection(projectionName) {"use strict";
 			return new KharchenkoShabanova();
 		case "LambertEqualAreaCylindrical":
 			return new LambertEqualAreaCylindrical();
+                case "McBrydeThomas1":
+                    return new McBrydeThomas1();
                 case "McBrydeThomas2":
                     return new McBrydeThomas2();
 		case "Mercator":
