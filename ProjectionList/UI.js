@@ -106,6 +106,8 @@ function getProjection(projectionName) {
             return new Robinson();
         case "Sinusoidal":
             return new Sinusoidal();
+        case "SineSeries":
+            return new SineSeries();
         case "Strebe1995":
             return new Strebe1995();
         case "Tobler1":
