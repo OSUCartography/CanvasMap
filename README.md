@@ -18,7 +18,7 @@ CanvasMap contains the core JavaScript files. Code related to the map and projec
 in src/. CanvasMap.js is created by the build.xml ant script. Include this file in the
 HTML file.
 
-##Demos
+## Demos
 All code specific to an application is included in the UI.js files. These files construct
 the HTML GUI, provide event handlers and create the map with a projection.
 
@@ -31,7 +31,7 @@ MillerTransformation illustrates a transformation of the Mercator projection sug
 by Miller in 1942.
 StrebeTransformation illustrates a transformation method invented by D. Strebe.
 
-##Programming Model
+## Programming Model
 UI.js:
 DOM event handlers and construction of the model consisting of a map, one or more layers
 and a projection.
@@ -45,7 +45,7 @@ Contains an array of layers, a projection, and scale factor applied before drawi
 After the layer, canvas, projection and scale are created, invoke map.load to load the 
 layer geometry.
 
-##Extending CanvasMap with Custom Projections
+## Extending CanvasMap with Custom Projections
 To extend CanvasMap with an additional projection, duplicate an existing 
 projection file in the projections folder and change the function name and the included
 toString() and forward() functions.
@@ -53,7 +53,6 @@ toString() and forward() functions.
 The forward function receives longitude and latitude values in radians. The projected 
 coordinates have to be written to the xy array. The xy parameter is only for returning the
 projected coordinates and does not contain valid data when the function is called.
-
 
 Important: use Apache Ant to concatenate and minify all JavaScript files in the src folder.
 The default Ant target creates CanvasMap.js and CanvasMap-min.js. To run Ant, 
